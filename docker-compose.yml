@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./db
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: news_db
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  api:
+    build: ./api
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+  parser:
+    build: ./parser
+    depends_on:
+      - db
+
+volumes:
+  db_data:

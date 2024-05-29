@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS news_db;
+USE news_db;
+
+CREATE TABLE IF NOT EXISTS source (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    url VARCHAR(2048) NOT NULL,
+    config JSON NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    source_id INT NOT NULL,
+    link VARCHAR(2048) NOT NULL,
+    title LONGTEXT NOT NULL,
+    content LONGTEXT NOT NULL,
+    date DATETIME NOT NULL,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY (source_id) REFERENCES source(id)
+);
